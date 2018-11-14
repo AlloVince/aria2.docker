@@ -1,0 +1,22 @@
+sudo: false
+
+jobs:
+  include:
+    - stage: staging
+      if: branch = master AND tag IS blank
+      script:
+        - docker build -t allovince/aria2 .
+        - docker tag allovince/aria2 allovince/aria2:staging
+        - docker images
+        - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+        - docker push allovince/aria2:staging;
+    - stage: docker release
+      if: tag IS present
+      script:
+        - docker build -t allovince/aria2 .
+        - docker tag allovince/aria2 allovince/aria2:$TRAVIS_TAG
+        - docker images
+        - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+        - docker push allovince/aria2:latest;
+        - docker push allovince/aria2:$TRAVIS_TAG;
+
