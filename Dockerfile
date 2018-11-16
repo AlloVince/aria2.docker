@@ -20,5 +20,5 @@ EXPOSE 6881
 #For Torrent Download
 EXPOSE 6999
 
-CMD touch /config/aria2.session && aria2c --conf-path=/config/aria2.conf \
+CMD touch /cache/aria2.session && aria2c --conf-path=/config/aria2.conf \
            --rpc-secret=${TOKEN}
