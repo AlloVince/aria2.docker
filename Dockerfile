@@ -11,7 +11,8 @@ RUN apk update && \
 
 VOLUME ["/downloads", "/config", "/cache"]
 
-ENV TOKEN aria2-admin
+ENV RPC_SECRET aria2-admin
+ENV BT_METADATA_ONLY true
 
 #For RPC
 EXPOSE 6800
@@ -21,4 +22,4 @@ EXPOSE 6881
 EXPOSE 6999
 
 CMD touch /cache/aria2.session && aria2c --conf-path=/config/aria2.conf \
-           --rpc-secret=${TOKEN}
+           --rpc-secret=${RPC_SECRET} --bt-metadata-only=${BT_METADATA_ONLY}
